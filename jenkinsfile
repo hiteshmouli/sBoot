@@ -12,7 +12,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 script {
-                    sh 'docker build -t jendoc:1.0 .'
+                    sh 'docker build -t jendoc:1.0 -f Dockerfile .'
                 }
             }
         }
