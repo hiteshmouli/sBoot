@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('build') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hiteshmouli/sBoot.git']]])
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('build docker image') {
+            steps {
+                script {
+                    sh 'docker build -t jendoc:1.0 .'
+                }
+            }
+        }
+        
+        stage('push image to Hub'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                    sh 'docker login --username hiteshmouli -p ${dockerhubpwd}'
+                    sh 'docker push hiteshmouli/jendoc:1.0'
+                    }
+
+                }
+            }
+        }
+    }
+}
