@@ -20,8 +20,8 @@ pipeline {
         stage('push image to Hub'){
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
-                    sh 'docker login --username hiteshmouli@gmail.com -p ${dockerhubpwd}'
+                    withCredentials([usernamePassword(credentialsId: 'dockerhubpwd', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh 'docker login --username $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                     sh 'docker push hiteshmouli/jendoc:1.0'
                     }
 
