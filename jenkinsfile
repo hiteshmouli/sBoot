@@ -22,6 +22,7 @@ pipeline {
                 script{
                     withCredentials([usernamePassword(credentialsId: 'dockerhubpwd', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh "docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD"
+                    sh 'docker tag jendoc:1.0 hiteshmouli/jendoc:1.0'                    
                     sh "docker push hiteshmouli/jendoc:1.0"
                     }
 
