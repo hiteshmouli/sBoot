@@ -12,7 +12,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 script {
-                    sh 'DOCKER_HOST=tcp://172.17.0.1:2375 docker build -t jendoc:1.0 --build-arg WAR_FILE=spring-boot-rest-example-0.5.0.war -f Dockerfile .'
+                    sh 'docker build -t jendoc:1.0 --build-arg WAR_FILE=spring-boot-rest-example-0.5.0.war -f Dockerfile .'
                 }
             }
         }
